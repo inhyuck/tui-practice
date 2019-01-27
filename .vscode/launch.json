@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - TuiPracticeApplication",
+            "request": "launch",
+            "mainClass": "io.inhyuck.tuipractice.TuiPracticeApplication",
+            "projectName": "tui-practice"
+        }
+    ]
+}
