@@ -1,5 +1,7 @@
 package io.inhyuck.tuipractice.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,9 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import io.inhyuck.tuipractice.domain.Article;
 import io.inhyuck.tuipractice.mapper.ArticleMapper;
+import io.inhyuck.tuipractice.service.UploadFileService;
 
 @Controller
 @RequestMapping("/article")
@@ -17,6 +23,8 @@ public class ArticleController {
     
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private UploadFileService uploadFileService;
     
     @GetMapping("/{id}")
     public String findOne(@PathVariable("id") int id, Model model) {
@@ -33,9 +41,10 @@ public class ArticleController {
     }
 
     @PostMapping("create")
-    public String createArticle(Article article, Model model) {
+    @ResponseBody
+    public Article createArticle(Article article, @RequestParam(name="userfile[]") List<MultipartFile> multipartFiles, Model model) {
         articleMapper.save(article);
-        model.addAttribute("id", article.getId());
-        return "success";
+        uploadFileService.storeFileInLocal(multipartFiles, article.getId());
+        return article;
     }
 }

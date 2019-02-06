@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.inhyuck.tuipractice.mapper.UploadFileMapper">
+    <select id="findOne" resultType="io.inhyuck.tuipractice.domain.UploadFile">
+        select * from upload_file where id = #{id}
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO upload_file
+    	(article_id, origin_name, stored_name, size)
+        VALUES 
+    	(#{articleId}, #{originName}, #{storedName}, #{size});
+    </insert>
+
+</mapper>
